@@ -5,9 +5,10 @@ substitutions:
   _BUCKET: "dataflow-test-ranchana"
 
 steps:
-  -name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: bash
-  args: ["./run_pipeline.sh"]
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: bash
+    args:    
+      - ./run_pipeline.sh
 
 timeout: 1200s
 
