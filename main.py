@@ -99,3 +99,5 @@ def run(argv=None):
             | "Write alert to PubSub" >> beam.io.WriteToPubSub(topic=known_args.alert_topic)
         )
 
+if __name__ == "__main__":
+    run()
