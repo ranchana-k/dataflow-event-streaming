@@ -1,0 +1,13 @@
+steps:
+  -name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: bash
+  args: ["./run_pipeline.sh"]
+
+timeout: 1200s
+
+substitutions:
+  _AGG_WINDOW: "60"
+  _ALERT_WINDOW: "1"
+  YOUR_REGION: "us-central1"
+  YOUR_BUCKET: "dataflow-test-ranchana"
+

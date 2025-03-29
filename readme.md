@@ -34,3 +34,20 @@ Ensure your Dataflow service account (e.g., `<project-number>-compute@developer.
   "device": "mobile",
   "event_count": 112
 }
+```
+## Event Simulation with Locust
+
+This project includes a simple Locust script (`event_generation/locustfile.py`) to simulate event traffic:
+
+### How to Use:
+1. Install Locust if you haven't: `pip install locust`
+2. Run Locust: `locust -f event_generation/locustfile.py`
+3. Open the web UI at http://localhost:8089
+4. Set the target host to your deployed Cloud Function URL 
+5. Start the test to simulate user events
+
+### Notes:
+- The event schema matches the one expected by the Dataflow pipeline
+- You can modify the fields or event rate for different simulation scenarios
+- This file is not used by the Dataflow pipeline itself and is safe to include in the same Git repo
+
