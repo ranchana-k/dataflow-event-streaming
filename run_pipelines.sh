@@ -9,7 +9,7 @@ python3 main.py \
   --alert_window_sec=${_ALERT_WINDOW:-1} \
   --runner=DataflowRunner \
   --project=$PROJECT_ID \
-  --region=${YOUR_REGION} \
-  --temp_location=gs://${YOUR_BUCKET}/temp \
-  --staging_location=gs://${YOUR_BUCKET}/staging \
+  --region=${_REGION} \
+  --temp_location=gs://${_BUCKET}/temp \
+  --staging_location=gs://${_BUCKET}/staging \
   --job_name=streaming-purchase-alerts-$(date +%Y%m%d%H%M%S)
