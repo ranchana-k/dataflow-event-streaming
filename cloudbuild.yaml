@@ -15,6 +15,7 @@ steps:
         export ALERT_WINDOW=$_ALERT_WINDOW
         export REGION=$_REGION
         export BUCKET=$_BUCKET
+        chmod +x run_pipeline.sh
         ./run_pipeline.sh
 
 timeout: 1200s
