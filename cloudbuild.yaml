@@ -8,7 +8,14 @@ steps:
   - name: 'python:3.10-slim'
     entrypoint: bash
     args:    
-      - ./run_pipeline.sh
+      - -c
+      - |
+        #!/bin/bash
+        export AGG_WINDOW=$_AGG_WINDOW
+        export ALERT_WINDOW=$_ALERT_WINDOW
+        export REGION=$_REGION
+        export BUCKET=$_BUCKET
+        ./run_pipeline.sh
 
 timeout: 1200s
 
