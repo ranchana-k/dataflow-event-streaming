@@ -3,6 +3,7 @@ substitutions:
   _ALERT_WINDOW: "1"
   _REGION: "us-central1"
   _BUCKET: "dataflow-test-ranchana"
+  _PROJECT_ID: "rugged-precept-451103-n9"
 
 steps:
   - name: 'python:3.10-slim'
@@ -15,6 +16,7 @@ steps:
         export ALERT_WINDOW=$_ALERT_WINDOW
         export REGION=$_REGION
         export BUCKET=$_BUCKET
+        export PROJECT_ID=$_PROJECT_ID
         chmod +x run_pipeline.sh
         ./run_pipeline.sh
 
