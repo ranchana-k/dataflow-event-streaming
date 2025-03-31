@@ -26,19 +26,27 @@ This project includes a simple Locust script (`event_generation/locustfile.py`) 
 ## How to Run the Pipeline
 1. Set up confiugration in `pipeline_config.json`
 2. Running Options:
+    
     2.1 Run locally
       ```
       python main.py --runner=DirectRunner
       ```
-    2.2 Run on Dataflow
-      ```
-      python main.py --runner=DataflowRunner
-      ```
-    2.3 Deploy using CloudBuild 
+    2.2 Run on dataflow using CloudBuild 
       Make sure that you have enabled CloudBuild API then
       ```
       gcloud builds submit --config cloudbuild.yaml
       ```
+    2.3 Deploy CI/CD Pipeline Using Cloud Build Trigger  
+    Set up a Cloud Build Trigger to automatically deploy on new commits to your GitHub repo.
+    🔧 **Steps to set it up:**
+    
+    1. Go to the GCP Console → **Cloud Build > Triggers**
+    2. Click **"Create Trigger"**
+    3. Under **Source**, connect your GitHub repo (you’ll need to authorize GitHub if it’s your first time)
+    4. Choose your **branch** (e.g. `main`) or use a regex like `.*` to match all
+    5. Set the **trigger type** to: `Build configuration file`  
+       → use `cloudbuild.yaml` from the root of your repo
+    6. Save the trigger
  
 
 ## IAM Roles Required
