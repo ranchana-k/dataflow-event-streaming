@@ -20,19 +20,26 @@ This project includes a simple Locust script (`event_generation/locustfile.py`) 
 4. Configure:
 - Number of users to simulate
 - Spawn rate
-- Target host (e.g., your HTTP endpoint or ingestion URL)
-This allows you to simulate real-time user event traffic into your pipeline.Set the target host to your deployed Cloud Function URL 
+- Target host (e.g., your HTTP endpoint or your cloud run functions URL)
 5. Start the test to simulate user event
 
 ## How to Run the Pipeline
 1. Set up confiugration in `pipeline_config.json`
 2. Running Options:
-  2.1 Run locally
+    2.1 Run locally
       ```
       python main.py --runner=DirectRunner
       ```
-  2.2 Run on Dataflow
-
+    2.2 Run on Dataflow
+      ```
+      python main.py --runner=DataflowRunner
+      ```
+    2.3 Deploy using CloudBuild 
+      Make sure that you have enabled CloudBuild API then
+      ```
+      gcloud builds submit --config cloudbuild.yaml
+      ```
+ 
 
 ## IAM Roles Required
 Ensure your Dataflow service account (e.g., `<project-number>-compute@developer.gserviceaccount.com`) has these roles:
@@ -49,10 +56,6 @@ Ensure your Dataflow service account (e.g., `<project-number>-compute@developer.
   "event_count": 112
 }
 ```
-## Event Simulation with Locust
-
-
-
 
 ### Notes:
 - The event schema matches the one expected by the Dataflow pipeline
