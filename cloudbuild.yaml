@@ -1,5 +1,5 @@
 substitutions:
-  _AGG_WINDOW: "60"
+  _AGG_WINDOW: "10"
   _ALERT_WINDOW: "1"
   _REGION: "us-central1"
   _BUCKET: "dataflow-test-ranchana"

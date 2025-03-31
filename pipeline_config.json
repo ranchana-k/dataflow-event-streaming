@@ -1,6 +1,9 @@
 {
-    "input_topic": "projects/rugged-precept-451103-n9/topics/streaming-events",
-    "alert_topic": "projects/rugged-precept-451103-n9/topics/high-volume-alerts",
-    "output_table": "rugged-precept-451103-n9:dataflow_test.purchase_summary"
-  }
-  
+  "input_topic": "projects/rugged-precept-451103-n9/topics/streaming-events",
+  "alert_topic": "projects/rugged-precept-451103-n9/topics/high-volume-alerts",
+  "output_table": "rugged-precept-451103-n9:dataflow_test.purchase_summary",
+  "aggregation_window_sec": 10,
+  "alert_window_sec": 1,
+  "project": "rugged-precept-451103-n9",
+  "region": "us-central1"
+}

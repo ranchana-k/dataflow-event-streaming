@@ -55,18 +55,29 @@ def run(argv=None):
     parser.add_argument('--alert_topic', default=config.get("alert_topic"))
     parser.add_argument('--aggregation_window_sec', type=int, default=10, help='Fixed window duration in seconds for BQ aggregation')
     parser.add_argument('--alert_window_sec', type=int, default=1, help='Fixed window duration in seconds for alerting')
+    parser.add_argument('--runner', default='DirectRunner')  # Optional: makes local runs easier
+    parser.add_argument('--project', default=config.get("project"))  # Optional: if needed for Dataflow
+    parser.add_argument('--region', default=config.get("region"))  # Optional
     known_args, pipeline_args = parser.parse_known_args(argv)
 
     options = PipelineOptions(pipeline_args)
     options.view_as(StandardOptions).streaming = True
+    
 
     with beam.Pipeline(options=options) as p:
-        purchases = (
+        events = (
             p
             | "Read PubSub" >> beam.io.ReadFromPubSub(topic=known_args.input_topic)
             | "Parse JSON" >> beam.ParDo(ParseMessage())
+        )
+        events | "Print Incoming Events" >> beam.Map(print)
+
+        purchases = (
+            events
             | "Filter 'purchase'" >> beam.ParDo(FilterPurchases())
         )
+
+        
 
         # Aggregation to BigQuery using dynamic window duration
         (
