@@ -1,24 +1,38 @@
 # Streaming Dataflow Pipeline with Alerting
+This project is a real-time streaming data pipeline built using Apache Beam on Google Cloud Dataflow. It ingests user events from a Pub/Sub topic, filters for "purchase" events, aggregates counts by region and device within fixed windows, stores the results in BigQuery, and publishes alerts to a separate Pub/Sub topic if certain thresholds are met.
 
-This repository contains a Python Apache Beam pipeline that:
-- Reads purchase events from Pub/Sub
-- Aggregates purchases in a configurable window and writes results to BigQuery
-- Detects spikes in purchases (>= 100 in short windows) and publishes alerts to a separate Pub/Sub topic
+## Folder Structures
+```
+├── event_generation/
+│   └── locustfile.py         # Simulates streaming events for testing
+├── main.py                   # Main Beam pipeline script
+├── run_pipeline.sh           # Shell script to trigger the pipeline
+├── cloudbuild.yaml           # Cloud Build config for CI/CD
+└── pipeline_config.json      # Optional config file for local development
+```
 
-## Components
-- `main.py`: Beam pipeline code
-- `requirements.txt`: Dependencies
-- `cloudbuild.yaml`: CI/CD config for deploying via Cloud Build
+## 🧪 Event Simulation
+This project includes a simple Locust script (`event_generation/locustfile.py`) to simulate event traffic
+### How to use
+1. Install Locust if you haven't: `pip install locust`
+2. Run Locust: `locust -f event_generation/locustfile.py`
+3. Open the web UI at http://localhost:8089
+4. Configure:
+- Number of users to simulate
+- Spawn rate
+- Target host (e.g., your HTTP endpoint or ingestion URL)
+This allows you to simulate real-time user event traffic into your pipeline.Set the target host to your deployed Cloud Function URL 
+5. Start the test to simulate user event
 
-## Deployment
-1. Replace the placeholders in `cloudbuild.yaml`
-2. Push to GitHub and connect Cloud Build trigger
-3. Monitor jobs in the Dataflow console
+## How to Run the Pipeline
+1. Set up confiugration in `pipeline_config.json`
+2. Running Options:
+  2.1 Run locally
+      ```
+      python main.py --runner=DirectRunner
+      ```
+  2.2 Run on Dataflow
 
-## Configuration
-You can set custom window durations:
-- `--aggregation_window_sec=60` for smoother BQ summaries
-- `--alert_window_sec=1` for spike detection
 
 ## IAM Roles Required
 Ensure your Dataflow service account (e.g., `<project-number>-compute@developer.gserviceaccount.com`) has these roles:
@@ -37,14 +51,8 @@ Ensure your Dataflow service account (e.g., `<project-number>-compute@developer.
 ```
 ## Event Simulation with Locust
 
-This project includes a simple Locust script (`event_generation/locustfile.py`) to simulate event traffic:
 
-### How to Use:
-1. Install Locust if you haven't: `pip install locust`
-2. Run Locust: `locust -f event_generation/locustfile.py`
-3. Open the web UI at http://localhost:8089
-4. Set the target host to your deployed Cloud Function URL 
-5. Start the test to simulate user events
+
 
 ### Notes:
 - The event schema matches the one expected by the Dataflow pipeline
