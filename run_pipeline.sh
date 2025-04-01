@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 python3 -m pip install -r requirements.txt
 echo "🚀 Launching Dataflow job..."
