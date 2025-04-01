@@ -4,6 +4,7 @@ substitutions:
   _REGION: "us-central1"
   _BUCKET: "dataflow-test-ranchana"
   _PROJECT_ID: "rugged-precept-451103-n9"
+  _PROJECT_NUMBER: "1046723826220"
 
 steps:
   - name: 'python:3.10-slim'
@@ -17,6 +18,7 @@ steps:
         export REGION=$_REGION
         export BUCKET=$_BUCKET
         export PROJECT_ID=$_PROJECT_ID
+        export SERVICE_ACCOUNT_EMAIL="${_PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
         chmod +x run_pipeline.sh
         ./run_pipeline.sh
 
