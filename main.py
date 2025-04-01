@@ -1,3 +1,5 @@
+print("✅ main.py loaded")
+
 import logging
 import json
 import argparse
@@ -122,5 +124,5 @@ def run(argv=None):
         )
 
 if __name__ == "__main__":
-    print("🚀 Starting main.py")
+    print("🚀 Entering main.py")
     run()
