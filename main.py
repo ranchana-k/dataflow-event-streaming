@@ -1,3 +1,4 @@
+import logging
 import json
 import argparse
 import apache_beam as beam
@@ -41,10 +42,18 @@ class FormatForBigQuery(beam.DoFn):
 def load_config(path="pipeline_config.json"):
     if os.path.exists(path):
         with open(path) as f:
-            return json.load(f)
-    return {}
-
-
+            config = json.load(f)
+            logging.info(f"Configuration loaded successfully from: {path}")
+            return config
+    else:
+            logging.warning(f"Configuration file not found: {path}. Using default empty configuration.")
+            return {}
+    except json.JSONDecodeError as e:
+        logging.error(f"Error parsing JSON from {path}: {e}")
+        return {}
+    except Exception as e:
+        logging.error(f"An unexpected error occurred while loading configuration: {e}")
+        return {}
 
 def run(argv=None):
     parser = argparse.ArgumentParser()
