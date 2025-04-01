@@ -42,10 +42,10 @@ class FormatForBigQuery(beam.DoFn):
 def load_config(path="pipeline_config.json"):
     try:
         if os.path.exists(path):
-        with open(path) as f:
-            config = json.load(f)
-            logging.info(f"Configuration loaded successfully from: {path}")
-            return config
+            with open(path) as f:
+                config = json.load(f)
+                logging.info(f"Configuration loaded successfully from: {path}")
+                return config
         else:
             logging.warning(f"Configuration file not found: {path}. Using default empty configuration.")
             return {}
