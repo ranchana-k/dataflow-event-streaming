@@ -12,6 +12,13 @@ steps:
     args:    
       - -c
       - |
+        echo "📂 Listing files..."
+        ls -la
+        echo "📁 Current directory: $(pwd)"
+        echo "📄 Printing main.py (if exists)"
+        cat main.py || echo "❌ main.py not found"
+
+        echo "🚀 Now running main.py"
         #!/bin/bash
         export AGG_WINDOW=$_AGG_WINDOW
         export ALERT_WINDOW=$_ALERT_WINDOW
