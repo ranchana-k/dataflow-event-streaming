@@ -57,6 +57,7 @@ def load_config(path="pipeline_config.json"):
         return {}
 
 def run(argv=None):
+    print("Parsing arguments")
     parser = argparse.ArgumentParser()
     config = load_config()
 
@@ -121,4 +122,5 @@ def run(argv=None):
         )
 
 if __name__ == "__main__":
+    print("🚀 Starting main.py")
     run()
