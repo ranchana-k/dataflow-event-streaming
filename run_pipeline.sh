@@ -13,5 +13,6 @@ python3 main.py \
   --region=${REGION} \
   --temp_location=gs://${BUCKET}/temp \
   --staging_location=gs://${BUCKET}/staging \
-  --job_name=streaming-purchase-alerts-$(date +%Y%m%d%H%M%S)
+  --job_name=streaming-purchase-alerts-$(date +%Y%m%d%H%M%S) \
+  --service-account-email=${SERVICE_ACCOUNT_EMAIL}
 echo "🚀 Done Submitting Dataflow job..."
