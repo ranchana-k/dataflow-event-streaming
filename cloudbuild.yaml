@@ -1,33 +1,4 @@
-steps:
-  # 1. Install Dependencies (if needed)
-  - name: 'python:3.10-slim' # Or a custom image with dependencies
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        pip install -r requirements.txt
-
-  # 2. Run the Dataflow Job using gcloud
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    args:
-      - 'dataflow'
-      - 'jobs'
-      - 'run'
-      - 'streaming-purchase-alerts' # Job name
-      - '--gcs-location=gs://$_BUCKET/main.py' # Path to your pipeline script
-      - '--region=$_REGION'
-      - '--temp-location=gs://$_BUCKET/temp'
-      - '--staging-location=gs://$_BUCKET/staging'
-      - '--parameters=config_file=pipeline_config.json'  # Pass config file path
-      - '--project=$_PROJECT_ID'
-      - '--runner=DataflowRunner'
-      - '--service-account=dataflow-pipeline-sa@$_PROJECT_ID.iam.gserviceaccount.com' # Use a custom service account
-      # Add other Dataflow parameters as needed
-    entrypoint: 'gcloud'
-
-# Substitutions (for variables)
 substitutions:
-  _REGION: 'us-central1'
   _AGG_WINDOW: "10"
   _ALERT_WINDOW: "1"
   _REGION: "us-central1"
@@ -35,6 +6,21 @@ substitutions:
   _PROJECT_ID: "rugged-precept-451103-n9"
   _PROJECT_NUMBER: "1046723826220"
 
+steps:
+  - name: 'python:3.10-slim'
+    entrypoint: bash
+    args:    
+      - -c
+      - |
+        #!/bin/bash
+        export AGG_WINDOW=$_AGG_WINDOW
+        export ALERT_WINDOW=$_ALERT_WINDOW
+        export REGION=$_REGION
+        export BUCKET=$_BUCKET
+        export PROJECT_ID=$_PROJECT_ID
+        export SERVICE_ACCOUNT_EMAIL="${_PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
+        chmod +x run_pipeline.sh
+        ./run_pipeline.sh
 
 timeout: 1200s
 
